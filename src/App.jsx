@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WatchedMovies from "./Components/WatchedMovies";
 import Favourite from "./Components/Favourite";
-import Movie from "./Components/Movie";
+import SingleMovie from "./Components/SpecificMovie";
 import HeaderLayout from "./Components/HeaderLayout";
 import Home from "./Components/Home";
 import { useGlobalContext } from "./context";
@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="movies/:id" element={<Movie />} />
+          <Route path="movies/:id" element={<SingleMovie />} />
           <Route path="movies" element={<HeaderLayout />}>
             <Route index element={<WatchedMovies />} />
             <Route path="watched" element={<WatchedMovies />} />
