@@ -10,6 +10,7 @@ const Movies = () => {
               <img
                 src="https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
                 alt="batman"
+                className="object-cover"
               />
               <div className="flex items-center justify-between mt-2">
                 <p className="text-xl text-stone-800">Batman</p>
