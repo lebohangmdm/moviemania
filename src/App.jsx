@@ -4,8 +4,11 @@ import Favourite from "./Components/Favourite";
 import Movie from "./Components/Movie";
 import HeaderLayout from "./Components/HeaderLayout";
 import Home from "./Components/Home";
+import { useGlobalContext } from "./context";
 
 function App() {
+  const { state } = useGlobalContext();
+  console.log(state);
   return (
     <>
       <BrowserRouter>
