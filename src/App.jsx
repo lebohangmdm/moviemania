@@ -14,9 +14,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="movies/:id" element={<SingleMovie />} />
           <Route path="movies" element={<HeaderLayout />}>
             <Route index element={<WatchedMovies />} />
+            <Route path=":id" element={<SingleMovie />} />
             <Route path="watched" element={<WatchedMovies />} />
             <Route path="favourite" element={<Favourite />} />
           </Route>

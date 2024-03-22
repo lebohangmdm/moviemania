@@ -1,6 +1,8 @@
-import StarRatings from "react-star-ratings";
+import { useState } from "react";
+import StarRating from "./StarRating";
 
 const SpecificMovie = () => {
+  const [userRating, setUserRating] = useState(0);
   return (
     <section>
       <div className="container-center">
@@ -30,16 +32,11 @@ const SpecificMovie = () => {
               <p className="text-stone-700 ">2018</p>
             </div>
             <div className="flex flex-col gap-6 mt-8">
-              <div className="flex items-center gap-4">
-                <StarRatings
-                  numberOfStars={10}
-                  starRatedColor="yellow"
-                  starDimension="25px"
-                  starSpacing="5px"
-                />
-                <p>8</p>
-              </div>
-
+              <StarRating
+                maxRating={10}
+                size={24}
+                onSetRating={setUserRating}
+              />
               <div className="flex gap-4">
                 <button className="py-2 px-4  font-semibold capitalize rounded-lg  text-stone-800 hover:bg-white hover:text-stone-800 transition-all duration-100 cursor-pointer hover:outline outline-2 outline-blue-500 ">
                   Add to watched list
