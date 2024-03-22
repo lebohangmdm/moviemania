@@ -7,8 +7,8 @@ const API_URL = `https://www.omdbapi.com/?apikey=${
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [movies, setMovies] = useState([``]);
-  const [query, setQuery] = useState("the menu");
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState("batman");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -16,25 +16,29 @@ export const AppProvider = ({ children }) => {
     const fetchMovies = async () => {
       try {
         setIsLoading(true);
+        setError("");
         const res = await fetch(`${API_URL}&s=${query}`);
         if (!res.ok) throw new Error("Something went wrong");
 
         const data = await res.json();
+        if (data.Response === "False") throw new Error("Movie Not found");
 
-        if (data.Response === "False") setError(data.Error);
         setMovies(data.Search);
+        setError("");
       } catch (error) {
-        console.log(error);
-        setError(err.message);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
+
+      if (query.length < 2) {
+        setMovies([]);
+        setError("");
+        return;
+      }
     };
     fetchMovies();
-  }, []);
-
-  // console.log(movies);
-  // console.log(error);
+  }, [query]);
 
   return (
     <AppContext.Provider

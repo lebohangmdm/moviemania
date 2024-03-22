@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const Movie = ({ movie }) => {
-  console.log(movie);
   const { imdbID: id, Title: title, Year: year, Poster: image } = movie;
   return (
     <Link to={`${id}`}>
