@@ -11,6 +11,10 @@
   }
 }
 
+.section-height {
+  height: calc(100vh - 32px);
+}
+
 .loader {
   width: 100px;
   aspect-ratio: 1;

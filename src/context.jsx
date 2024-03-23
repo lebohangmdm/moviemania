@@ -8,6 +8,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
+  const [watchedMovies, setWatchedMovies] = useState([]);
   const [query, setQuery] = useState("batman");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -40,6 +41,14 @@ export const AppProvider = ({ children }) => {
     fetchMovies();
   }, [query]);
 
+  const handleAddMovies = (movie) => {
+    return setWatchedMovies((watched) => [...watched, movie]);
+  };
+
+  const deleteMovie = (id) => {
+    setWatchedMovies((watched) => watched.filter((movie) => movie.id !== id));
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -48,6 +57,9 @@ export const AppProvider = ({ children }) => {
         isLoading,
         error,
         setQuery,
+        handleAddMovies,
+        watchedMovies,
+        deleteMovie,
       }}
     >
       {children}

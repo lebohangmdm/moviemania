@@ -2,7 +2,7 @@ import { useGlobalContext } from "../context";
 
 const SearchForm = () => {
   const { query, setQuery } = useGlobalContext();
-  console.log(query);
+
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <input

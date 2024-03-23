@@ -1,50 +1,125 @@
 import { useState } from "react";
 import StarRating from "./StarRating";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import useFetchMovie from "./hooks/useFetchMovie";
+import { IoStar } from "react-icons/io5";
+import { useGlobalContext } from "../context";
 
 const SpecificMovie = () => {
   const [userRating, setUserRating] = useState(0);
+  const navigate = useNavigate();
   const { id } = useParams();
+  const { handleAddMovies, watchedMovies } = useGlobalContext();
 
   const { isLoading, movie } = useFetchMovie(id);
-  const { Title: title, Year: year, Poster: image, Plot: plot } = movie;
 
-  console.log();
+  const alreadyWatched = watchedMovies
+    .map((watched) => watched.id)
+    .includes(movie.imdbID);
+
+  const {
+    Title: title,
+    Released: released,
+    Runtime: runtime,
+    Genre: genre,
+    Rated: rated,
+    imdbRating,
+    Poster: image,
+    Plot: plot,
+  } = movie;
+
   if (isLoading) return <Loading />;
 
+  console.log(movie.imdbID);
+
+  const addMovie = () => {
+    const newMovie = {
+      id,
+      title,
+      image,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ").at(0)),
+      userRating,
+    };
+    handleAddMovies(newMovie);
+  };
+
   return (
-    <section>
+    <section className="section-height">
       <div className="container-center">
         <div className="flex gap-6">
           <div className="w-[30%] relative">
             <img src={image} alt={title} className="object-cover mx-auto" />
-            <button className="absolute -top-4 left-6 py-2 px-4 text-3xl  text-white  ">
+            <button
+              className="absolute -top-4 left-6 py-2 px-4 text-3xl  text-white"
+              onClick={() => navigate(-1)}
+            >
               {" "}
               &larr;
             </button>
           </div>
           <div className="w-[60%]">
-            <div className="space-y-4 ">
-              <h2 className=" font-medium text-stone-800  text-3xl">{title}</h2>
-              <p className="text-stone-700 text-lg">{plot}</p>
-              <p className="text-stone-700 ">{year}</p>
-            </div>
-            <div className="flex flex-col gap-6 mt-8">
-              <StarRating
-                maxRating={10}
-                size={24}
-                onSetRating={setUserRating}
-              />
-              <div className="flex gap-4">
-                <button className="py-2 px-4  font-semibold capitalize rounded-lg  text-stone-800 hover:bg-white hover:text-stone-800 transition-all duration-100 cursor-pointer hover:outline outline-2 outline-blue-500 ">
-                  Add to watched list
-                </button>
-                <button className=" py-2 px-4 font-semibold capitalize rounded-lg bg-blue-600 text-white hover:bg-blue-700 hover:text-white cursor-pointer transition-all duration-200">
-                  Add to favourite
-                </button>
+            <h2 className="font-medium text-stone-800  text-3xl mb-8">
+              {title}
+            </h2>
+            <div className=" space-y-2">
+              <p className="text-stone-800 ">
+                {rated} || {genre}
+              </p>
+              <p className="text-stone-800 ">
+                {released} - {runtime}{" "}
+              </p>
+              <div className="flex items-center gap-2">
+                <span>
+                  <IoStar className="text-lg text-amber-500" />
+                </span>
+                <p className="text-stone-800">
+                  <strong className="text-lg">{imdbRating} </strong>
+                  IMDB rating
+                </p>
               </div>
+            </div>
+
+            <p className="text-stone-700 text-lg my-8">{plot}</p>
+            <div className="flex flex-col gap-6 mt-8">
+              {!alreadyWatched ? (
+                <>
+                  <p className="text-sm text-black">
+                    Add your rating for this movie
+                  </p>
+                  {userRating ? (
+                    <>
+                      <StarRating
+                        maxRating={10}
+                        size={24}
+                        onSetRating={setUserRating}
+                      />
+                      <div className="flex gap-4">
+                        <button
+                          className="py-2 px-4  font-semibold capitalize rounded-lg  text-stone-800 hover:bg-white hover:text-stone-800 transition-all duration-100 cursor-pointer hover:outline outline-2 outline-blue-500"
+                          onClick={addMovie}
+                        >
+                          Add to watched list
+                        </button>
+                        <button className=" py-2 px-4 font-semibold capitalize rounded-lg bg-blue-600 text-white hover:bg-blue-700 hover:text-white cursor-pointer transition-all duration-200">
+                          Add to favourite
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <StarRating
+                      maxRating={10}
+                      size={24}
+                      onSetRating={setUserRating}
+                    />
+                  )}
+                </>
+              ) : (
+                <p className="text-sm text-black">
+                  You have rated the movie already
+                </p>
+              )}
             </div>
           </div>
         </div>

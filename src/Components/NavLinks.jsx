@@ -1,13 +1,15 @@
-const links = ["Favourite", "Watched Movies"];
+import { NavLink } from "react-router-dom";
+
+const links = ["favourite", "watched"];
 
 const NavLinks = () => {
   return (
     <ul className="hidden lg:flex lg:items-center gap-4 ">
       {links.map((link, i) => {
         return (
-          <li key={i} className="link">
+          <NavLink to={`${link}`} key={i} className={`link`}>
             {link}
-          </li>
+          </NavLink>
         );
       })}
     </ul>
