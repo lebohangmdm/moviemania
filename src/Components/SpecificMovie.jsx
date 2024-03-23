@@ -1,18 +1,25 @@
 import { useState } from "react";
 import StarRating from "./StarRating";
+import { useParams } from "react-router-dom";
+import Loading from "./Loading";
+import useFetchMovie from "./hooks/useFetchMovie";
 
 const SpecificMovie = () => {
   const [userRating, setUserRating] = useState(0);
+  const { id } = useParams();
+
+  const { isLoading, movie } = useFetchMovie(id);
+  const { Title: title, Year: year, Poster: image, Plot: plot } = movie;
+
+  console.log();
+  if (isLoading) return <Loading />;
+
   return (
     <section>
       <div className="container-center">
         <div className="flex gap-6">
           <div className="w-[30%] relative">
-            <img
-              src="https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
-              alt="batman"
-              className="object-cover mx-auto"
-            />
+            <img src={image} alt={title} className="object-cover mx-auto" />
             <button className="absolute -top-4 left-6 py-2 px-4 text-3xl  text-white  ">
               {" "}
               &larr;
@@ -20,16 +27,9 @@ const SpecificMovie = () => {
           </div>
           <div className="w-[60%]">
             <div className="space-y-4 ">
-              <h2 className=" font-medium text-stone-800  text-3xl">
-                Batman Begins
-              </h2>
-              <p className="text-stone-700 text-lg">
-                After witnessing his parents' death, Bruce learns the art of
-                fighting to confront injustice. When he returns to Gotham as
-                Batman, he must stop a secret society that intends to destroy
-                the city.
-              </p>
-              <p className="text-stone-700 ">2018</p>
+              <h2 className=" font-medium text-stone-800  text-3xl">{title}</h2>
+              <p className="text-stone-700 text-lg">{plot}</p>
+              <p className="text-stone-700 ">{year}</p>
             </div>
             <div className="flex flex-col gap-6 mt-8">
               <StarRating
