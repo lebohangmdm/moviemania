@@ -31,7 +31,7 @@ const SpecificMovie = () => {
 
   if (isLoading) return <Loading />;
 
-  console.log(movie.imdbID);
+  console.log(movie);
 
   const addMovie = () => {
     const newMovie = {
@@ -97,13 +97,10 @@ const SpecificMovie = () => {
                       />
                       <div className="flex gap-4">
                         <button
-                          className="py-2 px-4  font-semibold capitalize rounded-lg  text-stone-800 hover:bg-white hover:text-stone-800 transition-all duration-100 cursor-pointer hover:outline outline-2 outline-blue-500"
+                          className="py-3 px-6  font-semibold capitalize rounded-lg bg-blue-700  text-white hover:brightness-150 transition-all duration-100 cursor-pointer"
                           onClick={addMovie}
                         >
                           Add to watched list
-                        </button>
-                        <button className=" py-2 px-4 font-semibold capitalize rounded-lg bg-blue-600 text-white hover:bg-blue-700 hover:text-white cursor-pointer transition-all duration-200">
-                          Add to favourite
                         </button>
                       </div>
                     </>
