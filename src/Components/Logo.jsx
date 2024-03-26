@@ -7,7 +7,7 @@ const Logo = () => {
       className="flex items-center gap-1 cursor-pointer text-3xl text-stone-900 "
     >
       <BiCameraMovie />
-      Moviemania
+      MovieMania
     </Link>
   );
 };

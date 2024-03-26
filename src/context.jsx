@@ -15,10 +15,13 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchMovies = async () => {
+      const controller = new AbortController();
       try {
         setIsLoading(true);
         setError("");
-        const res = await fetch(`${API_URL}&s=${query}`);
+        const res = await fetch(`${API_URL}&s=${query}`, {
+          signal: controller.signal,
+        });
         if (!res.ok) throw new Error("Something went wrong");
 
         const data = await res.json();
@@ -37,6 +40,10 @@ export const AppProvider = ({ children }) => {
         setError("");
         return;
       }
+
+      return () => {
+        controller.abort();
+      };
     };
     fetchMovies();
   }, [query]);

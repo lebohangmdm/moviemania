@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
@@ -29,10 +29,6 @@ const SpecificMovie = () => {
     Plot: plot,
   } = movie;
 
-  if (isLoading) return <Loading />;
-
-  console.log(movie);
-
   const addMovie = () => {
     const newMovie = {
       id,
@@ -44,6 +40,18 @@ const SpecificMovie = () => {
     };
     handleAddMovies(newMovie);
   };
+
+  useEffect(() => {
+    if (!title) return;
+
+    document.title = `MovieMania || ${title}`;
+
+    return () => {
+      document.title = "MovieMania";
+    };
+  }, [title]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <section className="section-height">
